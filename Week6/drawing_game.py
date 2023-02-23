@@ -53,10 +53,6 @@ def main():
         if mouse == (1,0,0): # left click
             # Draw a rectangle where the cursor is
             pygame.draw.rect(SCREEN, (DRAW_COLOR), (px,py,10,10))
-        # If mouse is released
-        if mouse == (0,0,1): # released
-            # Stop drawing
-            pygame.draw.rect(SCREEN, (WHITE), (px,py,10,10))
 
         # Flip display
         pygame.display.update()
