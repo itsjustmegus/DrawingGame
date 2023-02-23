@@ -1,2 +1,2 @@
 # DrawingGame
-Drawing software made with pygame
+## Drawing software made with pygame
