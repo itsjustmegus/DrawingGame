@@ -23,7 +23,7 @@ pygame.display.set_icon(icon)
 WHITE = 255, 255, 255
 DRAW_COLOR = "black"
 
-FPS = 60
+FPS = 120
 
 def draw_window():
     # Fill the background with white
@@ -35,24 +35,32 @@ def main():
     # Create game loop that runs until user quits
     running = True
 
+    draw_window()
+
     while running:
-        # Make game run at 60 FPS
+        # Make game run at 120 FPS
         clock.tick(FPS)
         # Does user click "close" button
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
 
-        mouse = pygame.mouse.get_pressed()
-
-        draw_window()
-
         # Get the mouse position
+        mouse = pygame.mouse.get_pressed()
         px, py = pygame.mouse.get_pos()
+
         # If the mouse is pressed
         if mouse == (1,0,0): # left click
             # Draw a rectangle where the cursor is
             pygame.draw.rect(SCREEN, (DRAW_COLOR), (px,py,10,10))
+            # Make the cursor invisible when drawing
+            pygame.mouse.set_visible(False)
+
+        if event.type == pygame.MOUSEBUTTONUP:
+            press = False
+            # Make the cursor visible when not drawing
+            pygame.mouse.set_visible(True)
+        
 
         # Flip display
         pygame.display.update()
