@@ -17,17 +17,17 @@ WIDTH, HEIGHT = 1000, 1000
 SCREEN = pygame.display.set_mode((WIDTH, HEIGHT))
 
 pygame.display.set_caption("Gus' Doodle Board")
-icon = pygame.image.load("draw.png")
+icon = pygame.image.load("images\draw.png")
 pygame.display.set_icon(icon)
 
-WHITE = 255, 255, 255
+WINDOW_COLOR = 255, 255, 255
 DRAW_COLOR = "black"
 
 FPS = 120
 
 def draw_window():
     # Fill the background with white
-        SCREEN.fill((WHITE))
+    SCREEN.fill(WINDOW_COLOR)
 
 def main():
     # Define clock object
@@ -46,15 +46,22 @@ def main():
                 running = False
 
         # Get the mouse position
-        mouse = pygame.mouse.get_pressed()
         px, py = pygame.mouse.get_pos()
+        mouse = pygame.mouse.get_pressed()
 
-        # If the mouse is pressed
+        # Draw if the mouse is left clicked
         if mouse == (1,0,0): # left click
-            # Draw a rectangle where the cursor is
+            # Draw a black rectangle where the cursor is with size 10px
             pygame.draw.rect(SCREEN, (DRAW_COLOR), (px,py,10,10))
             # Make the cursor invisible when drawing
             pygame.mouse.set_visible(False)
+
+        # Erase if the mouse is right clicked
+        if mouse == (0,0,1): # right click
+            # Draw a rectangle with the same color
+            # as the background where the cursor is with size 20px
+            pygame.draw.rect(SCREEN, (WINDOW_COLOR), (px,py,20,20))
+            # Make the cursor invisible when erasing
 
         if event.type == pygame.MOUSEBUTTONUP:
             press = False
