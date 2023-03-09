@@ -6,7 +6,7 @@ Design drawing software made with pygame that allows the user to draw by clickin
 ### drawing_game.py is the working main program
 - Allow user to draw
 - Allow user to erase
-- Allow user to undo/redo
-- Allow user to change brush size/eraser size
-- Allow user to save images
-- Allow user to create animations
+- TODO: Allow user to undo/redo
+- TODO: Allow user to change brush size/eraser size
+- TODO: Allow user to save images
+- TODO: Allow user to create animations
