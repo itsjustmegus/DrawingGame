@@ -43,6 +43,12 @@ class DrawingGame:
         # The clock object manages how fast the game runs
         self.clock = pygame.time.Clock()
 
+        # ------------------------- LOAD ASSETS ------------------------- #
+        self.brush_size_img = pygame.image.load("./assets/brush_size.png").convert()
+        self.size_1_img = pygame.image.load("./assets/size_1.png").convert()
+        self.size_2_img = pygame.image.load("./assets/size_2.png").convert()
+        self.size_3_img = pygame.image.load("./assets/size_3.png").convert()
+
 # ----------------------------------------- GAME LOOP ----------------------------------------- #
     def run_game(self):
         "Draw background that doesn't update"
@@ -71,13 +77,11 @@ class DrawingGame:
                 # Exit Python
                 exit()
 
-# --------------------------------------- DRAW SCREEN -------------------------------------- #
-    def draw_window(self):
-        # Redraw the screen
-        pygame.display.update()
-
 # ---------------------------------------- USER DRAW --------------------------------------- #
     def user_draw(self):
+        # Declare brush_size
+        self.brush_size = 10
+
         # Get the mouse position
         self.px, self.py = pygame.mouse.get_pos()
         self.mouse = pygame.mouse.get_pressed()
@@ -85,7 +89,7 @@ class DrawingGame:
         # Draw if the mouse is left clicked
         if self.mouse == (1,0,0): # left click
             # Draw a black rectangle where the cursor is with size 10px
-            pygame.draw.rect(self.SCREEN, (self.DRAW_COLOR), (self.px,self.py,10,10))
+            pygame.draw.rect(self.SCREEN, (self.DRAW_COLOR), (self.px, self.py, self.brush_size, self.brush_size))
             # Make the cursor invisible when drawing
             pygame.mouse.set_visible(False)
 
@@ -93,13 +97,40 @@ class DrawingGame:
         if self.mouse == (0,0,1): # right click
             # Draw a rectangle with the same color
             # as the background where the cursor is with size 20px
-            pygame.draw.rect(self.SCREEN, (self.WINDOW_COLOR), (self.px,self.py,20,20))
+            pygame.draw.rect(self.SCREEN, (self.WINDOW_COLOR), (self.px, self.py, 20, 20))
             # Make the cursor invisible when erasing
 
         if self.event.type == pygame.MOUSEBUTTONUP:
             self.press = False
             # Make the cursor visible when not drawing
             pygame.mouse.set_visible(True)
+
+# --------------------------------------- DRAW SCREEN -------------------------------------- #
+    def draw_window(self):
+        # -------------------- DRAW brush_size BUTTON --------------------- #
+        self.SCREEN.blit(self.brush_size_img, (100, 0))
+
+        # ------------------ BUTTON CLICKED EVENTS -------------------- #
+        if self.event.type == pygame.MOUSEBUTTONDOWN:
+            if self.brush_size_img.get_rect().collidepoint(100, 150):
+                while running:
+                    self.SCREEN.blit(self.size_1_img, ())
+                    # Does user click "close" button
+                    for self.event in pygame.event.get():
+                        if self.event.type == pygame.QUIT:
+                            running = False
+                        if self.event.type == pygame.MOUSEBUTTONDOWN:
+                            if self.size_1_img.get_rect().collidepoint(100, 128):
+                                self.brush_size = 10
+                            if self.size_2_img.get_rect().collidepoint(100, 206):
+                                self.brush_size = 20
+                            if self.size_3_img.get_rect().collidepoint(100, 284):
+                                self.brush_size = 30
+
+
+        # ------------- COPY BACKBUFFER INTO VIDEO MEMORY ------------- #
+        # Redraw the screen
+        pygame.display.update()
 
 
 def main():
@@ -109,21 +140,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-"""# -------------------- DRAW REPLAY BUTTON --------------------- #
-replay_btn = pygame.draw.rect(
-    self.screen,
-    "black",
-    [self.WIDTH // 2 - 100, self.HEIGHT // 2 + 50, 80, 30],
-    0,
-    border_radius = 5
-)
-replay_txt = self.font_small.render(" Replay", True, "white")
-self.screen.blit(
-    replay_txt,
-    (
-        self.WIDTH // 2 - 100,
-        self.HEIGHT // 2 + 50
-    )
-)"""
