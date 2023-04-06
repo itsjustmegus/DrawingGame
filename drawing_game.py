@@ -111,21 +111,23 @@ class DrawingGame:
         self.SCREEN.blit(self.brush_size_img, (100, 0))
 
         # ------------------ BUTTON CLICKED EVENTS -------------------- #
+        # Add a portion where the game stops drawing if the mouse collides with the rect
         if self.event.type == pygame.MOUSEBUTTONDOWN:
             if self.brush_size_img.get_rect().collidepoint(100, 150):
-                while running:
-                    self.SCREEN.blit(self.size_1_img, ())
-                    # Does user click "close" button
-                    for self.event in pygame.event.get():
-                        if self.event.type == pygame.QUIT:
-                            running = False
-                        if self.event.type == pygame.MOUSEBUTTONDOWN:
-                            if self.size_1_img.get_rect().collidepoint(100, 128):
-                                self.brush_size = 10
-                            if self.size_2_img.get_rect().collidepoint(100, 206):
-                                self.brush_size = 20
-                            if self.size_3_img.get_rect().collidepoint(100, 284):
-                                self.brush_size = 30
+                self.SCREEN.blit(self.size_1_img, (100, 128))
+                self.SCREEN.blit(self.size_2_img, (100, 206))
+                self.SCREEN.blit(self.size_3_img, (100, 284))
+                # Does user click "close" button
+                for self.event in pygame.event.get():
+                    if self.event.type == pygame.QUIT:
+                        running = False
+                    if self.event.type == pygame.MOUSEBUTTONDOWN:
+                        if self.size_1_img.get_rect().collidepoint(100, 128):
+                            self.brush_size = 10
+                        if self.size_2_img.get_rect().collidepoint(100, 206):
+                            self.brush_size = 20
+                        if self.size_3_img.get_rect().collidepoint(100, 284):
+                            self.brush_size = 30
 
 
         # ------------- COPY BACKBUFFER INTO VIDEO MEMORY ------------- #

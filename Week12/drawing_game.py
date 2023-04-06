@@ -111,6 +111,7 @@ class DrawingGame:
         self.SCREEN.blit(self.brush_size_img, (100, 0))
 
         # ------------------ BUTTON CLICKED EVENTS -------------------- #
+        # Add a portion where the game stops drawing if the mouse collides with the rect
         if self.event.type == pygame.MOUSEBUTTONDOWN:
             if self.brush_size_img.get_rect().collidepoint(100, 150):
                 while running:
