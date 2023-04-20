@@ -2,7 +2,7 @@
     Name:    drawing_game.py
     Author:  Augustus Allred
     Created: 2/16/23
-    Revised: 4/5/23
+    Revised: 4/20/23
     Purpose: drawing software with pygame that allows user
              to click and drag to draw on screen
 """

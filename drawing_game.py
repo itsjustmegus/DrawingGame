@@ -2,7 +2,7 @@
     Name:    drawing_game.py
     Author:  Augustus Allred
     Created: 2/16/23
-    Revised: 4/5/23
+    Revised: 4/20/23
     Purpose: drawing software with pygame that allows user
              to click and drag to draw on screen
 """
@@ -22,6 +22,9 @@ class DrawingGame:
         # Declare initial window and drawing color
         self.WINDOW_COLOR = 255, 255, 255
         self.DRAW_COLOR = "black"
+
+        # Declare brush_size
+        self.brush_size = 5
 
         # Set Frames Per Second
         self.FPS = 120
@@ -79,9 +82,6 @@ class DrawingGame:
 
 # ---------------------------------------- USER DRAW --------------------------------------- #
     def user_draw(self):
-        # Declare brush_size
-        self.brush_size = 10
-
         # Get the mouse position
         self.px, self.py = pygame.mouse.get_pos()
         self.mouse = pygame.mouse.get_pressed()
@@ -89,7 +89,7 @@ class DrawingGame:
         # Draw if the mouse is left clicked
         if self.mouse == (1,0,0): # left click
             # Draw a black rectangle where the cursor is with size 10px
-            pygame.draw.rect(self.SCREEN, (self.DRAW_COLOR), (self.px, self.py, self.brush_size, self.brush_size))
+            pygame.draw.circle(self.SCREEN, (self.DRAW_COLOR), (self.px, self.py), self.brush_size)
             # Make the cursor invisible when drawing
             pygame.mouse.set_visible(False)
 
@@ -113,21 +113,19 @@ class DrawingGame:
         # ------------------ BUTTON CLICKED EVENTS -------------------- #
         # Add a portion where the game stops drawing if the mouse collides with the rect
         if self.event.type == pygame.MOUSEBUTTONDOWN:
-            if self.brush_size_img.get_rect().collidepoint(100, 150):
+            if self.brush_size_img.get_rect().collidepoint(pygame.mouse.get_pos()):
                 self.SCREEN.blit(self.size_1_img, (100, 128))
                 self.SCREEN.blit(self.size_2_img, (100, 206))
                 self.SCREEN.blit(self.size_3_img, (100, 284))
-                # Does user click "close" button
                 for self.event in pygame.event.get():
-                    if self.event.type == pygame.QUIT:
-                        running = False
                     if self.event.type == pygame.MOUSEBUTTONDOWN:
-                        if self.size_1_img.get_rect().collidepoint(100, 128):
+                        if self.size_1_img.get_rect().collidepoint(pygame.mouse.get_pos()):
                             self.brush_size = 10
-                        if self.size_2_img.get_rect().collidepoint(100, 206):
+                        elif self.size_2_img.get_rect().collidepoint(pygame.mouse.get_pos()):
                             self.brush_size = 20
-                        if self.size_3_img.get_rect().collidepoint(100, 284):
+                        elif self.size_3_img.get_rect().collidepoint(pygame.mouse.get_pos()):
                             self.brush_size = 30
+                    
 
 
         # ------------- COPY BACKBUFFER INTO VIDEO MEMORY ------------- #
