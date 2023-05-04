@@ -37,11 +37,6 @@ class DrawingGame:
 
         # Set caption for window
         pygame.display.set_caption("Gus' Doodle Board")
-
-        # Load icon image for the window
-        self.icon = pygame.image.load("./assets/draw_icon.png")
-        # Set icon image for window
-        pygame.display.set_icon(self.icon)
         
         # Create display window
         self.SCREEN = pygame.display.set_mode((self.WIDTH, self.HEIGHT))
@@ -50,10 +45,15 @@ class DrawingGame:
         self.clock = pygame.time.Clock()
 
         # ------------------------- LOAD ASSETS ------------------------- #
-        self.brush_size_img = pygame.image.load("./assets/brush_size.png").convert()
-        self.size_1_img = pygame.image.load("./assets/size_1.png").convert()
-        self.size_2_img = pygame.image.load("./assets/size_2.png").convert()
-        self.size_3_img = pygame.image.load("./assets/size_3.png").convert()
+        # Load icon image for the window
+        self.icon = pygame.image.load("./assets/draw_icon.png")
+        # Set icon image for window
+        pygame.display.set_icon(self.icon)
+        # Load button images
+        self.brush_size_img = pygame.image.load("./assets/brush_size.png").convert_alpha()
+        self.size_1_img = pygame.image.load("./assets/size_1.png").convert_alpha()
+        self.size_2_img = pygame.image.load("./assets/size_2.png").convert_alpha()
+        self.size_3_img = pygame.image.load("./assets/size_3.png").convert_alpha()
 
 # ----------------------------------------- GAME LOOP ----------------------------------------- #
     def run_game(self):
@@ -97,13 +97,14 @@ class DrawingGame:
             pygame.mouse.set_visible(False)
 
         # Erase if the mouse is right clicked
-        if self.mouse == (0,0,1): # right click
+        elif self.mouse == (0,0,1): # right click
             # Draw a rectangle with the same color
             # as the background where the cursor is with size 20px
             pygame.draw.rect(self.SCREEN, (self.WINDOW_COLOR), (self.px, self.py, 20, 20))
             # Make the cursor invisible when erasing
 
         if self.event.type == pygame.MOUSEBUTTONUP:
+            self.clicked = False
             self.press = False
             # Make the cursor visible when not drawing
             pygame.mouse.set_visible(True)
@@ -116,23 +117,30 @@ class DrawingGame:
         # ------------------ BUTTON CLICKED EVENTS -------------------- #
         # Add a portion where the game stops drawing if the mouse collides with the rect
         if self.event.type == pygame.MOUSEBUTTONDOWN:
-            if self.brush_size_img.get_rect().collidepoint(pygame.mouse.get_pos()) and self.clicked == False:
+            if self.brush_size_img.get_rect().collidepoint(pygame.mouse.get_pos()):
                 self.clicked = True
                 self.SCREEN.blit(self.size_1_img, (100, 128))
                 self.SCREEN.blit(self.size_2_img, (100, 206))
                 self.SCREEN.blit(self.size_3_img, (100, 284))
-                
-            elif self.size_1_img.get_rect().collidepoint(pygame.mouse.get_pos()) and self.clicked == True:
+                pygame.display.update()
+
+            elif self.clicked and self.size_1_img.get_rect().collidepoint(pygame.mouse.get_pos()):
+                self.SCREEN.fill(self.WINDOW_COLOR)
                 self.brush_size = 10
-                print("brush size 10")
+                self.SCREEN.blit(self.brush_size_img, (100, 0))
+                pygame.display.update()
                 self.clicked = False
-            elif self.size_2_img.get_rect().collidepoint(pygame.mouse.get_pos()) and self.clicked == True:
+            elif self.clicked and self.size_2_img.get_rect().collidepoint(pygame.mouse.get_pos()):
+                self.SCREEN.fill(self.WINDOW_COLOR)
                 self.brush_size = 20
-                print("brush size 20")
+                self.SCREEN.blit(self.brush_size_img, (100, 0))
+                pygame.display.update()
                 self.clicked = False
-            elif self.size_3_img.get_rect().collidepoint(pygame.mouse.get_pos()) and self.clicked == True:
+            elif self.clicked and self.size_3_img.get_rect().collidepoint(pygame.mouse.get_pos()):
+                self.SCREEN.fill(self.WINDOW_COLOR)
                 self.brush_size = 30
-                print("brush size 30")
+                self.SCREEN.blit(self.brush_size_img, (100, 0))
+                pygame.display.update()
                 self.clicked = False
                     
 
